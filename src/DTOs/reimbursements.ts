@@ -1,6 +1,6 @@
 export default interface Reimbursement {
     amount: number,
-    comment: string,
+    description: string,
     receipts: Array<string>,
     id?: string,
     submittalTime?: number,
