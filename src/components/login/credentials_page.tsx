@@ -5,6 +5,12 @@ export default function LoginCredentials() {
     const usernameInput = useRef(null);
     const passwordInput = useRef(null);
 
+    function enterKey(event) {
+        if (event.keyCode = 13) {
+            authenticate();
+        }
+    }
+
     async function authenticate() {
         if (!usernameInput.current.value || !passwordInput.current.value) {
             return alert("Enter a username and password.");
@@ -15,6 +21,8 @@ export default function LoginCredentials() {
         if (response.status !== 200) {
             alert(`ERROR: ${await response.text()}`);
         }
+        else
+            alert("Login successful.")
     }
 
     return (
@@ -26,11 +34,11 @@ export default function LoginCredentials() {
                     <tr>
                         <td>
                             <label>Username: </label>
-                            <input ref={usernameInput} type="text"/>
+                            <input ref={usernameInput} type="text" onKeyPress={enterKey}/>
                         </td>
                         <td>
                             <label>Password: </label>
-                            <input ref={passwordInput} type="text"/>
+                            <input ref={passwordInput} type="text" onKeyPress={enterKey}/>
                         </td>
                         <td>
                             <button onClick={authenticate}>Login</button>
