@@ -1,4 +1,4 @@
-import Reimbursement from "../../DTOs/reimbursements";
+import Reimbursement from "../../DTOs/reimbursement";
 import ReceiptsList from "./reimbursement-receipts-list";
 
 export default function ReimbursementRecordsRow(props: {reimbursement: Reimbursement, isManager: boolean, updateFunction?: Function}) {
@@ -21,7 +21,7 @@ export default function ReimbursementRecordsRow(props: {reimbursement: Reimburse
       if(response.status === 200) {
           alert("Reimbursement status was successfully updated to 'Approve'.");
           props.updateFunction();
-      }
+        };
     }
 
     async function denyReimbursement() {

@@ -1,5 +1,5 @@
 import _ from "lodash";
-import Reimbursement from "../../DTOs/reimbursements";
+import Reimbursement from "../../DTOs/reimbursement";
 import ReimbursementRecordsRow from "../shared/reimbursement-table-row";
 
 export default function ReimbursementRecordsTable(props: {records: Reimbursement[]}) {

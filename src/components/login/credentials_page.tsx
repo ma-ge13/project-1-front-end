@@ -1,4 +1,21 @@
+import { useRef } from "react";
+
 export default function LoginCredentials() {
+
+    const usernameInput = useRef(null);
+    const passwordInput = useRef(null);
+
+    async function authenticate() {
+        if (!usernameInput.current.value || !passwordInput.current.value) {
+            return alert("Enter a username and password.");
+        }
+
+        const response = await fetch(`http://localhost:4444/employee/?username=${usernameInput.current.value}&password=${passwordInput.current.value}`);
+
+        if (response.status !== 200) {
+            alert(`ERROR: ${await response.text()}`);
+        }
+    }
 
     return (
         <>
@@ -9,14 +26,14 @@ export default function LoginCredentials() {
                     <tr>
                         <td>
                             <label>Username: </label>
-                            <input type="text"/>
+                            <input ref={usernameInput} type="text"/>
                         </td>
                         <td>
                             <label>Password: </label>
-                            <input type="text"/>
+                            <input ref={passwordInput} type="text"/>
                         </td>
                         <td>
-                            <button>Login</button>
+                            <button onClick={authenticate}>Login</button>
                         </td>
                     </tr>
                 </tbody>

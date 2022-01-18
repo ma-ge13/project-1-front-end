@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Reimbursement from "../../DTOs/reimbursements";
+import Reimbursement from "../../DTOs/reimbursement";
 import ReimbursementForm from "./reimbursement-form";
 import ReimbursementRecordsTable from "./reimbursement-records-table";
 

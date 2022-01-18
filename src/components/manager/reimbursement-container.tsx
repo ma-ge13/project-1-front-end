@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Reimbursement from "../../DTOs/reimbursements";
+import Reimbursement from "../../DTOs/reimbursement";
 import PendingReimbursementsTable from "./pending-reimbursements-table";
 
 export default function ManagerReimbursementContainer() {

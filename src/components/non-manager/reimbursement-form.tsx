@@ -1,5 +1,5 @@
 import { useRef } from "react"
-import Reimbursement from "../../DTOs/reimbursements";
+import Reimbursement from "../../DTOs/reimbursement";
 
 export default function ReimbursementForm(props: {updateReimbursementTable: Function}) {
 
