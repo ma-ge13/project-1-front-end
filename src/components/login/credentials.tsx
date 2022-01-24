@@ -1,12 +1,17 @@
 import { useRef } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { actions } from "../../sessionStore";
 
 export default function LoginCredentials() {
 
+    const dispatch = useDispatch();
     const usernameInput = useRef(null);
     const passwordInput = useRef(null);
+    const navigateTo = useNavigate();
 
     function enterKey(event) {
-        if (event.keyCode = 13) {
+        if (event.key == "Enter") {
             authenticate();
         }
     }
@@ -21,8 +26,20 @@ export default function LoginCredentials() {
         if (response.status !== 200) {
             alert(`ERROR: ${await response.text()}`);
         }
-        else
-            alert("Login successful.")
+        else {
+            const { username, employeeId, firstName, lastName, isManager } = await response.json();
+            console.log(typeof isManager, isManager);
+            
+            sessionStorage.setItem("username", username);
+            sessionStorage.setItem("employeeId", employeeId);
+            sessionStorage.setItem("firstName", firstName);
+            sessionStorage.setItem("lastName", lastName);
+            sessionStorage.setItem("isManager", isManager);
+
+            dispatch(actions.updateUser());
+            
+            isManager ? navigateTo("manager") : navigateTo("non-manager");
+        }
     }
 
     return (
@@ -38,7 +55,7 @@ export default function LoginCredentials() {
                         </td>
                         <td>
                             <label>Password: </label>
-                            <input ref={passwordInput} type="text" onKeyPress={enterKey}/>
+                            <input ref={passwordInput} type="password" onKeyPress={enterKey}/>
                         </td>
                         <td>
                             <button onClick={authenticate}>Login</button>

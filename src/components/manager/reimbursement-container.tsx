@@ -1,27 +1,38 @@
 import { useEffect, useState } from "react";
-import Reimbursement from "../../DTOs/reimbursement";
+import { useNavigate } from "react-router-dom";
 import PendingReimbursementsTable from "./pending-reimbursements-table";
 
 export default function ManagerReimbursementContainer() {
 
-    const [pendingList, updatePendingList] = useState([]);
-    
-    async function retrievePendingReimbursements() {
-        const response = await fetch("http://localhost:4444/reimbursements/pending");
+  const [pendingList, updatePendingList] = useState([]);
+  const navigateTo = useNavigate();
 
-        updatePendingList(await response.json());
-    }
+  function displayReimbursementStatistics() {
+    navigateTo("statistics");
+  }
+  
+  async function retrievePendingReimbursements() {
+      const response = await fetch("http://localhost:4444/reimbursements/pending");
 
-    useEffect(() => {
-        retrievePendingReimbursements();
-    }, []);
+      updatePendingList(await response.json());
+  }
 
-    return (
-      <>
-        <PendingReimbursementsTable
-          reimbursements={pendingList}
-          updateFunction={retrievePendingReimbursements}
-        />
-      </>
-    );
+  useEffect(() => {
+      retrievePendingReimbursements();
+  }, []);
+
+  return (
+    <>
+      <button onClick={displayReimbursementStatistics}>
+        Reimbursement Statistics
+      </button>
+
+      <br /><br />
+      
+      <PendingReimbursementsTable
+        reimbursements={pendingList}
+        updateFunction={retrievePendingReimbursements}
+      />
+    </>
+  );
 }

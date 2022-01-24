@@ -1,10 +1,12 @@
 import _ from "lodash"
+import { Provider } from "react-redux";
 import Reimbursement from "../../DTOs/reimbursement"
+import { sessionStore } from "../../sessionStore";
 import ReimbursementRecordsRow from "../shared/reimbursement-table-row"
 
 export default function PendingReimbursementsTable(props: {reimbursements: Reimbursement[], updateFunction: Function}) {
 
-    const pendingReimbursementsRow = props.reimbursements.map(r => <ReimbursementRecordsRow key={r.id} reimbursement={r} isManager={true} updateFunction={props.updateFunction}/>);
+    const pendingReimbursementsRow = props.reimbursements.map(r => <Provider store={sessionStore}><ReimbursementRecordsRow key={r.id} reimbursement={r} updateFunction={props.updateFunction}/></Provider>);
 
     return (
         <>
@@ -15,10 +17,9 @@ export default function PendingReimbursementsTable(props: {reimbursements: Reimb
                     <table style={{ borderSpacing: "15px" }}>
                         <thead>
                             <tr style={{textAlign: "center"}}>
-                                <th>Submittal Date</th>
-                                <th>Receipts</th>
-                                <th>Amount</th>
-                                <th>Description</th>
+                                <th><u>Submittal Date</u></th>
+                                <th><u>Employee</u></th>
+                                <th><u>Amount Request</u></th>
                                 <th></th>
                                 <th></th>
                             </tr>

@@ -4,7 +4,7 @@ import ReimbursementRecordsRow from "../shared/reimbursement-table-row";
 
 export default function ReimbursementRecordsTable(props: {records: Reimbursement[]}) {
     
-    const recordsTableRow = props.records.map(r => <ReimbursementRecordsRow key={r.id} reimbursement={r} isManager={false}/>);
+    const recordsTableRow = props.records.map(r => <ReimbursementRecordsRow key={r.id} reimbursement={r}/>);
 
     return (
         <>
@@ -13,13 +13,12 @@ export default function ReimbursementRecordsTable(props: {records: Reimbursement
             {_.isEmpty(props.records) ?
                 <h3 style={{ textAlign: "center" }}>No reimbursement records found.</h3> :
                 (
-                    <table style={{ borderSpacing: "15px" }}>
+                    <table style={{ borderSpacing: "20px" }}>
                         <thead>
                             <tr>
-                                <th>Submittal Date</th>
-                                <th>Reimbursement Amount</th>
-                                <th>Description</th>
-                                <th>Status</th>
+                                <th><u>Submittal Date</u></th>
+                                <th><u>Amount Request</u></th>
+                                <th><u>Status</u></th>
                             </tr>
                         </thead>
                         <tbody>

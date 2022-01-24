@@ -40,8 +40,15 @@ export default function ReimbursementForm(props: {updateReimbursementTable: Func
         }
         else {
             alert("Reimbursement was successfully submitted.");
+            resetForm();
             props.updateReimbursementTable(await response.json());
         }
+    }
+
+    function resetForm() {
+        amountInput.current.value = null;
+        reasonInput.current.value = null;
+        filesUploaded.current.value = null;
     }
 
     return(
