@@ -2,7 +2,7 @@ import LoginCredentials from "../../components/login/credentials";
 import ManagerReimbursementContainer from "../../components/manager/reimbursement-container";
 import NonManagerReimbursementContainer from "../../components/non-manager/reimbursement-container";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import ReimbursementDetails from "../shared/reimbursement-details";
+import ReimbursementDetails from "../../components/shared/reimbursement-details";
 import ReimbursementStatistics from "../../components/manager/reimbursement-statistics";
 import { Provider } from "react-redux";
 import { sessionStore } from "../../sessionStore";
@@ -13,7 +13,7 @@ export default function RouteList() {
         <BrowserRouter>
             <Provider store={sessionStore}>
                 <Routes>
-                    <Route path="/" element={<LoginCredentials />} />
+                    <Route path="" element={<LoginCredentials />} />
 
                     <Route path="non-manager">
                     <Route path="" element={<NonManagerReimbursementContainer />} />
