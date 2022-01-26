@@ -2,7 +2,6 @@ import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { actions, UserState } from "../../sessionStore";
-import ProtectedRoutes from "../routes/route_protection";
 
 export default function EmployeeLogin() {
 

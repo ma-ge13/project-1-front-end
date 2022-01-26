@@ -15,7 +15,7 @@ export default function ReimbursementRecordsRow(props: { reimbursement: Reimburs
   return (
     <tr>
       <td>
-        {new Date(props.reimbursement.submittalTime!).toLocaleString()}
+        {new Date(props.reimbursement.submittalTime).toLocaleString()}
       </td>
       
       {isManager &&

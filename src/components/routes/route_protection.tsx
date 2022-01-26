@@ -10,4 +10,4 @@ export default function ProtectedRoutes() {
             {user.employeeId ? <Outlet /> : <Navigate to="/" />}
         </>
     )
-};
+}

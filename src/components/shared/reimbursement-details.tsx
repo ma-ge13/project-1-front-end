@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import Reimbursement from "../../DTOs/reimbursement";
 import { UserState } from "../../sessionStore";
-import ReceiptsList from "../shared/reimbursement-receipts-list";
+// import ReceiptsList from "../shared/reimbursement-receipts-list";
 
 export default function ReimbursementDetails() {
 
@@ -30,7 +30,7 @@ export default function ReimbursementDetails() {
     if(response.status === 200) {
         alert("Reimbursement status was successfully updated to 'Approve'.");
         navigateTo("/manager");
-      };
+      }
   }
 
   async function denyReimbursement() {
