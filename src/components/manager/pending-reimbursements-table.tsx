@@ -6,7 +6,12 @@ import ReimbursementRecordsRow from "../shared/reimbursement-table-row"
 
 export default function PendingReimbursementsTable(props: {reimbursements: Reimbursement[], updateFunction: Function}) {
 
-    const pendingReimbursementsRow = props.reimbursements.map(r => <Provider store={sessionStore}><ReimbursementRecordsRow key={r.id} reimbursement={r} updateFunction={props.updateFunction}/></Provider>);
+    const pendingReimbursementsRow = props.reimbursements.map(
+        r =>
+        <Provider store={sessionStore} key={r.id}>
+            <ReimbursementRecordsRow key={r.id} reimbursement={r} />
+        </Provider>
+    );
 
     return (
         <>

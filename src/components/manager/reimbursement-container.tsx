@@ -10,6 +10,11 @@ export default function ManagerReimbursementContainer() {
   function displayReimbursementStatistics() {
     navigateTo("statistics");
   }
+
+  function endSession() {
+    sessionStorage.clear();
+    navigateTo("/");
+  }
   
   async function retrievePendingReimbursements() {
       const response = await fetch("http://localhost:4444/reimbursements/pending");
@@ -23,9 +28,23 @@ export default function ManagerReimbursementContainer() {
 
   return (
     <>
-      <button onClick={displayReimbursementStatistics}>
-        Reimbursement Statistics
-      </button>
+      <table>
+        <tbody>
+          <tr>
+            <td>
+              <button onClick={displayReimbursementStatistics}>
+                Reimbursement Statistics
+              </button>
+            </td>
+
+            <td>
+              <button onClick={endSession}>
+                Logout
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
       <br /><br />
       

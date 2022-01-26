@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import Reimbursement from "../../DTOs/reimbursement";
 import { UserState } from "../../sessionStore";
-import ReceiptsList from "./reimbursement-receipts-list";
+import ReceiptsList from "../shared/reimbursement-receipts-list";
 
 export default function ReimbursementDetails() {
 
@@ -14,43 +14,43 @@ export default function ReimbursementDetails() {
     // reimbursement.receipts.forEach(r => <ReceiptsList receipt={r} />);
     
   
-//   async function approveReimbursement() {
-//       const reimbursement: Reimbursement = { ...props.reimbursement };
+  async function approveReimbursement() {
+      const updateReimbursement: Reimbursement = { ...reimbursement };
       
-//       reimbursement.status = "Approved";
+      updateReimbursement.status = "Approved";
 
-//       const response = await fetch("http://localhost:4444/reimbursements/update",
-//           {
-//               method: "PUT",
-//               body: JSON.stringify(reimbursement),
-//               headers: { "Content-Type": "application/json" }
-//           }
-//       )
+      const response = await fetch("http://localhost:4444/reimbursements/update",
+          {
+              method: "PUT",
+              body: JSON.stringify(updateReimbursement),
+              headers: { "Content-Type": "application/json" }
+          }
+      )
 
-//     if(response.status === 200) {
-//         alert("Reimbursement status was successfully updated to 'Approve'.");
-//         props.updateFunction();
-//       };
-//   }
+    if(response.status === 200) {
+        alert("Reimbursement status was successfully updated to 'Approve'.");
+        navigateTo("/manager");
+      };
+  }
 
-//   async function denyReimbursement() {
-//     const reimbursement: Reimbursement = { ...props.reimbursement };
+  async function denyReimbursement() {
+    const updateReimbursement: Reimbursement = { ...reimbursement };
     
-//     reimbursement.status = "Denied";
+    updateReimbursement.status = "Denied";
 
-//     const response = await fetch("http://localhost:4444/reimbursements/update",
-//       {
-//         method: "PUT",
-//         body: JSON.stringify(reimbursement),
-//         headers: { "Content-Type": "application/json" },
-//       }
-//     );
+    const response = await fetch("http://localhost:4444/reimbursements/update",
+      {
+        method: "PUT",
+        body: JSON.stringify(updateReimbursement),
+        headers: { "Content-Type": "application/json" },
+      }
+    );
 
-//     if(response.status === 200) {
-//         alert("Reimbursement status was successfully updated to 'Deny'.");
-//         props.updateFunction();
-//     }
-//   }
+    if(response.status === 200) {
+        alert("Reimbursement status was successfully updated to 'Deny'.");
+        navigateTo("/manager");
+    }
+  }
     
     function returnToReimbursements() {
         isManager ? navigateTo("/manager") : navigateTo("/non-manager");
@@ -138,19 +138,17 @@ export default function ReimbursementDetails() {
                             </tr>
                             )}
 
-                            {/* {isManager &&
-                                <td style={{ textAlign: "center" }}>
-                                    <button onClick={approveReimbursement}>Approve</button>
-                                </td>
+                            {isManager &&
+                                <tr>
+                                    <td style={{ textAlign: "center" }}>
+                                        <button onClick={approveReimbursement}>Approve</button>
+                                    </td>
+                                
+                                    <td style={{ textAlign: "center" }}>
+                                        <button onClick={denyReimbursement}>Deny</button>
+                                    </td>
+                                </tr>
                             }
-        
-                            
-                            {isManager && 
-                                <td style={{ textAlign: "center" }}>
-                                <button onClick={denyReimbursement}>Deny</button>
-                                </td>
-                            } */}
-                        
                         </tbody>
                     </table>
                 </>

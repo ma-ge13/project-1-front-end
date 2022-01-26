@@ -1,10 +1,12 @@
-import { useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { actions } from "../../sessionStore";
+import { actions, UserState } from "../../sessionStore";
+import ProtectedRoutes from "../routes/route_protection";
 
-export default function LoginCredentials() {
+export default function Login() {
 
+    const user = useSelector((state: UserState) => state);
     const dispatch = useDispatch();
     const usernameInput = useRef(null);
     const passwordInput = useRef(null);
@@ -14,6 +16,14 @@ export default function LoginCredentials() {
         if (event.key == "Enter") {
             authenticate();
         }
+    }
+
+    useEffect(() => {
+        dispatch(actions.updateUser());
+    }, []);
+
+    if (user.employeeId) {
+        user.isManager ? navigateTo("manager") : navigateTo("non-manager");
     }
 
     async function authenticate() {
@@ -28,7 +38,6 @@ export default function LoginCredentials() {
         }
         else {
             const { username, employeeId, firstName, lastName, isManager } = await response.json();
-            console.log(typeof isManager, isManager);
             
             sessionStorage.setItem("username", username);
             sessionStorage.setItem("employeeId", employeeId);

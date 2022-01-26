@@ -2,12 +2,10 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Reimbursement from "../../DTOs/reimbursement";
 import { UserState } from "../../sessionStore";
-import ReceiptsList from "./reimbursement-receipts-list";
 
-export default function ReimbursementRecordsRow(props: { reimbursement: Reimbursement, updateFunction?: Function }) {
+export default function ReimbursementRecordsRow(props: { reimbursement: Reimbursement }) {
       
-  const isManager = useSelector((state: UserState) => state.isManager);  
-  const reimbursementReceiptsList = props.reimbursement.receipts.map(r => <ReceiptsList key={Math.random()} receipt={r} />);
+  const isManager = useSelector((state: UserState) => state.isManager);
   const navigateTo = useNavigate();
 
   function displayReimbursementDetails() {
