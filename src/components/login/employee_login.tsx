@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { actions, UserState } from "../../sessionStore";
 import ProtectedRoutes from "../routes/route_protection";
 
-export default function Login() {
+export default function EmployeeLogin() {
 
     const user = useSelector((state: UserState) => state);
     const dispatch = useDispatch();

@@ -1,4 +1,4 @@
-import Login from "../login/employee_login";
+import EmployeeLogin from "../login/employee_login";
 import ManagerReimbursementContainer from "../../components/manager/reimbursement-container";
 import NonManagerReimbursementContainer from "../../components/non-manager/reimbursement-container";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -14,7 +14,7 @@ export default function RouteList() {
         <BrowserRouter>
             <Provider store={sessionStore}>
                 <Routes>
-                    <Route path="/" element={<Login />} />
+                    <Route path="/" element={<EmployeeLogin />} />
 
                     <Route element={<ProtectedRoutes />}>
                         <Route path="non-manager">
@@ -31,5 +31,5 @@ export default function RouteList() {
                 </Routes>
             </Provider>
         </BrowserRouter>
-  );
+    );
 }
