@@ -65,7 +65,7 @@ export default function ReimbursementDetails() {
 
             setReimbursement(await response.json());
         })();
-    }, []);
+    }, [reimbursementId]);
 
     return (
         <>

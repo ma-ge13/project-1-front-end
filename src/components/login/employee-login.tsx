@@ -12,7 +12,7 @@ export default function EmployeeLogin() {
     const navigateTo = useNavigate();
 
     function enterKey(event) {
-        if (event.key == "Enter") {
+        if (event.key === "Enter") {
             authenticate();
         }
     }
