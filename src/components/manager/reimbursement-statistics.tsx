@@ -10,8 +10,12 @@ export default function ReimbursementStatistics() {
 
     return (
         <>
-            <button onClick={returnToPendingReimbursements}>Return to Pending Reimbursements</button>
-            <h2>Reimbursement Statistics</h2>
+            <button onClick={returnToPendingReimbursements}>
+                Return to Pending Reimbursements
+            </button>
+            <br /><br />
+
+            <h2><u>Reimbursement Statistics</u></h2>
         </>
     )
 }

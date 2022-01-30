@@ -13,13 +13,17 @@ export default function ReimbursementForm(props: {updateReimbursementTable: Func
     
     function readFileUploads(event) {
         files.splice(0);
-        console.log(event.target.files);
         const fileUploads = event.target.files;
+        
         for (const file of fileUploads) {
-            files.push(file);
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = (event) => {
+                files.push(event.target.result);
+            }
         }
 
-        console.log(files);
+        console.log("Files", files);
     }
 
     async function sendReimbursement() {
@@ -33,7 +37,7 @@ export default function ReimbursementForm(props: {updateReimbursementTable: Func
             amount: amountInput.current?.valueAsNumber
         };
 
-        const response = await fetch("http://localhost:4444/reimbursements",
+        const response = await fetch("https://ponzi-bank.azurewebsites.net/reimbursements",
             {
                 method: "POST",
                 body: JSON.stringify(reimbursement),
@@ -61,8 +65,9 @@ export default function ReimbursementForm(props: {updateReimbursementTable: Func
         <>
             <h2><u>Submit a Reimbursement Request</u></h2>
             
-            <label><b>Reimbursement Description</b></label><br /><br />
-            <textarea ref={reasonInput} cols={75} rows={5} placeholder="Provide a brief explanation of the need for this request"/>
+            <label><b>Reimbursement Description</b></label>
+            <br /><br />
+            <textarea ref={reasonInput} cols={75} rows={5} placeholder="Briefly explain the need for this request"/>
             <br /><br /><br />
             
             <label><b>Attach Receipts</b> (uploading multiple receipts to this request is allowed)</label>
@@ -75,7 +80,8 @@ export default function ReimbursementForm(props: {updateReimbursementTable: Func
             <label>$ </label><input ref={amountInput} type="number" min={0.00} placeholder="0.00" />
             <br /><br /><br />
 
-            <label htmlFor="myReceipt"><b>REVIEW</b> the information you provided above <b>BEFORE</b> submitting this request</label>            <br /><br />
+            <label htmlFor="myReceipt"><b>REVIEW</b> the information you provided above <b>BEFORE</b> submitting this request</label>
+            <br /><br />
             <button onClick={sendReimbursement}>Submit Request</button>
             <br /><br />
         </>

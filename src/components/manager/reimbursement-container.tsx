@@ -17,7 +17,7 @@ export default function ManagerReimbursementContainer() {
   }
   
   async function retrievePendingReimbursements() {
-      const response = await fetch("http://localhost:4444/reimbursements/pending");
+      const response = await fetch("https://ponzi-bank.azurewebsites.net/reimbursements/pending");
 
       updatePendingList(await response.json());
   }
@@ -28,7 +28,7 @@ export default function ManagerReimbursementContainer() {
 
   return (
     <>
-      <table>
+      <table style={{ borderSpacing: "25px" }}>
         <tbody>
           <tr>
             <td>
@@ -45,8 +45,6 @@ export default function ManagerReimbursementContainer() {
           </tr>
         </tbody>
       </table>
-
-      <br /><br />
       
       <PendingReimbursementsTable
         reimbursements={pendingList}

@@ -15,7 +15,7 @@ export default function NonManagerReimbursementContainer() {
   }
   
   async function retrieveAllReimbursementRecords() {
-    const response = await fetch("http://localhost:4444/reimbursements");
+    const response = await fetch("https://ponzi-bank.azurewebsites.net/reimbursements");
     
     setReimbursementRecords(await response.json());
   }

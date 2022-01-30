@@ -16,6 +16,7 @@ export default function PendingReimbursementsTable(props: {reimbursements: Reimb
     return (
         <>
             <h2><u>Pending Reimbursements</u></h2>
+            <br />
 
             {_.isEmpty(pendingReimbursementsRow) ? <h3 style={{ textAlign: "center" }}>No pending reimbursement requests.</h3> :
                 (

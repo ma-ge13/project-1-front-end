@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import Reimbursement from "../../DTOs/reimbursement";
@@ -11,15 +11,17 @@ export default function ReimbursementDetails() {
     const { reimbursementId } = useParams();
     const [reimbursement, setReimbursement] = useState<Reimbursement>();
     const navigateTo = useNavigate();
+    const commentInput = useRef(null);
     // reimbursement.receipts.forEach(r => <ReceiptsList receipt={r} />);
     
   
   async function approveReimbursement() {
       const updateReimbursement: Reimbursement = { ...reimbursement };
       
+      commentInput && (updateReimbursement.comment = commentInput.current.value);
       updateReimbursement.status = "Approved";
 
-      const response = await fetch("http://localhost:4444/reimbursements/update",
+      const response = await fetch("https://ponzi-bank.azurewebsites.net/reimbursements/update",
           {
               method: "PUT",
               body: JSON.stringify(updateReimbursement),
@@ -28,7 +30,7 @@ export default function ReimbursementDetails() {
       )
 
     if(response.status === 200) {
-        alert("Reimbursement status was successfully updated to 'Approve'.");
+        alert("Reimbursement status was successfully updated to 'Approved'.");
         navigateTo("/manager");
       }
   }
@@ -36,9 +38,10 @@ export default function ReimbursementDetails() {
   async function denyReimbursement() {
     const updateReimbursement: Reimbursement = { ...reimbursement };
     
+    commentInput && (updateReimbursement.comment = commentInput.current.value);
     updateReimbursement.status = "Denied";
 
-    const response = await fetch("http://localhost:4444/reimbursements/update",
+    const response = await fetch("https://ponzi-bank.azurewebsites.net/reimbursements/update",
       {
         method: "PUT",
         body: JSON.stringify(updateReimbursement),
@@ -47,7 +50,7 @@ export default function ReimbursementDetails() {
     );
 
     if(response.status === 200) {
-        alert("Reimbursement status was successfully updated to 'Deny'.");
+        alert("Reimbursement status was successfully updated to 'Denied'.");
         navigateTo("/manager");
     }
   }
@@ -58,7 +61,7 @@ export default function ReimbursementDetails() {
 
     useEffect(() => {
         (async () => {
-            const response = await fetch(`http://localhost:4444/reimbursements/${reimbursementId}`);
+            const response = await fetch(`https://ponzi-bank.azurewebsites.net/reimbursements/${reimbursementId}`);
 
             setReimbursement(await response.json());
         })();
@@ -112,9 +115,9 @@ export default function ReimbursementDetails() {
                             </tr>
                             
                             {/* <tr>
-                                            <td>Receipts: </td>
-                                            <td>{reimbursement.receipts}</td>
-                                        </tr> */}
+                                <td>Receipts: </td>
+                                <td>{reimbursement.receipts}</td>
+                            </tr> */}
                             
                             <tr>
                                 <td>
@@ -125,32 +128,54 @@ export default function ReimbursementDetails() {
                                     {reimbursement.status}
                                 </td>
                             </tr>
+
+                            {reimbursement.comment && (
+                                <tr>
+                                    <td>
+                                        Comment: 
+                                    </td>
+
+                                    <td>
+                                        {reimbursement.comment}
+                                    </td>
+                                </tr>
+                            )}
                             
                             {reimbursement.resolutionTime && (
                                 <tr>
                                     <td>
-                                        Request Resolved: 
+                                        Date Concluded: 
                                     </td>
                                 
-                                <td>
-                                    {new Date(reimbursement.resolutionTime).toLocaleString()}
-                                </td>
-                            </tr>
-                            )}
-
-                            {isManager &&
-                                <tr>
-                                    <td style={{ textAlign: "center" }}>
-                                        <button onClick={approveReimbursement}>Approve</button>
-                                    </td>
-                                
-                                    <td style={{ textAlign: "center" }}>
-                                        <button onClick={denyReimbursement}>Deny</button>
+                                    <td>
+                                        {new Date(reimbursement.resolutionTime).toLocaleString()}
                                     </td>
                                 </tr>
-                            }
+                            )}
                         </tbody>
                     </table>
+
+                    {isManager &&
+                        <>
+                            <h3><b><u>Comments</u></b></h3>
+                            <br />
+                                <textarea ref={commentInput} cols={75} rows={5} placeholder="Provide the reason(s) for updating this reimbursement request" />
+                            
+                            <table style={{ borderSpacing: "50px" }}>
+                                <tbody>
+                                    <tr>
+                                        <td style={{ textAlign: "center" }}>
+                                            <button onClick={approveReimbursement}>Approve</button>
+                                        </td>
+                                    
+                                        <td style={{ textAlign: "center" }}>
+                                            <button onClick={denyReimbursement}>Deny</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </>
+                    }
                 </>
             ) :
                 

@@ -30,7 +30,7 @@ export default function EmployeeLogin() {
             return alert("Enter a username and password.");
         }
 
-        const response = await fetch(`http://localhost:4444/employee/?username=${usernameInput.current.value}&password=${passwordInput.current.value}`);
+        const response = await fetch(`https://ponzi-bank.azurewebsites.net/employee/?username=${usernameInput.current.value}&password=${passwordInput.current.value}`);
 
         if (response.status !== 200) {
             alert(`ERROR: ${await response.text()}`);

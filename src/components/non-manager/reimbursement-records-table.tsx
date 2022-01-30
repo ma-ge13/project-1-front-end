@@ -17,7 +17,7 @@ export default function ReimbursementRecordsTable(props: {records: Reimbursement
                         <thead>
                             <tr>
                                 <th><u>Submittal Date</u></th>
-                                <th><u>Amount Request</u></th>
+                                <th><u>Amount Requested</u></th>
                                 <th><u>Status</u></th>
                             </tr>
                         </thead>
