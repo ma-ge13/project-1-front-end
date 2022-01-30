@@ -19,7 +19,7 @@ export default function EmployeeLogin() {
 
     useEffect(() => {
         dispatch(actions.updateUser());
-    }, [user]);
+    }, [dispatch]);
 
     if (user.employeeId) {
         user.isManager ? navigateTo("manager") : navigateTo("non-manager");
