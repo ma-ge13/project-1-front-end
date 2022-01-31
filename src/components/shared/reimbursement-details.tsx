@@ -2,10 +2,8 @@ import _ from "lodash";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { JsxElement } from "typescript";
 import Reimbursement from "../../DTOs/reimbursement";
 import { UserState } from "../../sessionStore";
-import ReceiptsList from "../shared/reimbursement-receipts-list";
 
 export default function ReimbursementDetails() {
 
@@ -28,12 +26,11 @@ export default function ReimbursementDetails() {
         const blob = new Blob([u8arr], { type: mime });
         const url = window.URL.createObjectURL(blob);
 
-        return <a href={url} download={`File.${blob.type.substring(blob.type.indexOf("/") + 1)}`}></a>
+        return <a href={url} download={`File.${blob.type.substring(blob.type.indexOf("/") + 1)}`}>Download</a>
     }
 
     const receiptURLs = [];
     if (!_.isEmpty(reimbursement)) {
-        const newReimbursement = {...reimbursement}
         for (const receipt of reimbursement.receipts) {
             receiptURLs.push(createDownloadLink(receipt).props.download);
         }

@@ -12,57 +12,6 @@ export default function ReimbursementStatistics() {
         navigateTo("/manager");
     }
 
-    // function sumTotal(): number {
-    //     const approvedList = { ...approvedReimbursements };
-    //     let sum = 0;
-
-    //     for (const reimbursement of approvedList) {
-    //         sum += reimbursement.amount;
-    //     }
-
-    //     return sum;
-    // }
-
-    // function minReimbursement(): Reimbursement {
-    //     const approvedList = { ...approvedReimbursements };
-    //     let min = Number.MAX_SAFE_INTEGER;
-    //     let target: Reimbursement = null;
-        
-    //     for (const reimbursement of approvedList) {
-    //         if (reimbursement.amount < min) {
-    //             min = reimbursement.amount;
-    //             target = reimbursement;
-    //         };
-    //     }
-
-    //     return target;
-    // }
-
-    // function maxReimbursement(): Reimbursement {
-    //     const approvedList = { ...approvedReimbursements };
-    //     let max = Number.MIN_SAFE_INTEGER;
-    //     let target: Reimbursement = null;
-        
-    //     for (const reimbursement of approvedList) {
-    //         if (reimbursement.amount > max) {
-    //             max = reimbursement.amount;
-    //             target = reimbursement;
-    //         };
-    //     }
-
-    //     return target;
-    // }
-
-    // async function getApprovedReimbursements() {
-    //     const response = await fetch("https://ponzi-bank.azurewebsites.net/reimbursements/approved");
-        
-    //     updateApprovedReimbursements(await response.json());
-    // }
-
-    // useEffect(() => {
-    //     getApprovedReimbursements();
-    // }, [])
-
     return (
         <>
             <button onClick={returnToPendingReimbursements}>
