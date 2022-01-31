@@ -29,7 +29,7 @@ export default function NonManagerReimbursementContainer() {
 
     return (
       <>
-        <h3 style={{textAlign: "center"}}>Welcome, {user.firstName}!</h3>
+        <h3 style={{ textAlign: "center" }}>Welcome, ......ummmmm......you!</h3>
         <table>
           <tbody>
             <tr>
