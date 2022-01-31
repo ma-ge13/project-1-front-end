@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { UserState } from "../../sessionStore";
 import PendingReimbursementsTable from "./pending-reimbursements-table";
 
 export default function ManagerReimbursementContainer() {
 
   const [pendingList, updatePendingList] = useState([]);
+  const user = useSelector((state: UserState) => state);
   const navigateTo = useNavigate();
 
   function displayReimbursementStatistics() {
@@ -28,7 +31,8 @@ export default function ManagerReimbursementContainer() {
 
   return (
     <>
-      <table style={{ borderSpacing: "25px" }}>
+      <h3 style={{textAlign: "center"}}>Welcome, {user.firstName}</h3>
+        <table style={{ borderSpacing: "25px" }}>
         <tbody>
           <tr>
             <td>

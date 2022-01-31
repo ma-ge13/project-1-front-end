@@ -1,9 +1,11 @@
+import _ from "lodash";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { JsxElement } from "typescript";
 import Reimbursement from "../../DTOs/reimbursement";
 import { UserState } from "../../sessionStore";
-// import ReceiptsList from "../shared/reimbursement-receipts-list";
+import ReceiptsList from "../shared/reimbursement-receipts-list";
 
 export default function ReimbursementDetails() {
 
@@ -12,10 +14,33 @@ export default function ReimbursementDetails() {
     const [reimbursement, setReimbursement] = useState<Reimbursement>();
     const navigateTo = useNavigate();
     const commentInput = useRef(null);
-    // reimbursement.receipts.forEach(r => <ReceiptsList receipt={r} />);
-    
+
+    function createDownloadLink(receipt: string): JSX.Element {
+        const arr = receipt.split(",");
+        const mime = arr[0].match(/:(.*?);/)[1];
+        const bstr = atob(arr[1]);
+        let n = bstr.length;
+        const u8arr = new Uint8Array(n);
+        while (n--) {
+          u8arr[n] = bstr.charCodeAt(n);
+        }
+
+        const blob = new Blob([u8arr], { type: mime });
+        const url = window.URL.createObjectURL(blob);
+
+        return <a href={url} download={`File.${blob.type.substring(blob.type.indexOf("/") + 1)}`}></a>
+    }
+
+    const receiptURLs = [];
+    if (!_.isEmpty(reimbursement)) {
+        const newReimbursement = {...reimbursement}
+        for (const receipt of reimbursement.receipts) {
+            receiptURLs.push(createDownloadLink(receipt).props.download);
+        }
+    }
+    console.log("Receipt URL array: ", receiptURLs[0], _.isEmpty(receiptURLs));
   
-  async function approveReimbursement() {
+    async function approveReimbursement() {
       const updateReimbursement: Reimbursement = { ...reimbursement };
       
       commentInput && (updateReimbursement.comment = commentInput.current.value);
@@ -27,33 +52,32 @@ export default function ReimbursementDetails() {
               body: JSON.stringify(updateReimbursement),
               headers: { "Content-Type": "application/json" }
           }
-      )
-
-    if(response.status === 200) {
-        alert("Reimbursement status was successfully updated to 'Approved'.");
-        navigateTo("/manager");
-      }
-  }
-
-  async function denyReimbursement() {
-    const updateReimbursement: Reimbursement = { ...reimbursement };
-    
-    commentInput && (updateReimbursement.comment = commentInput.current.value);
-    updateReimbursement.status = "Denied";
-
-    const response = await fetch("https://ponzi-bank.azurewebsites.net/reimbursements/update",
-      {
-        method: "PUT",
-        body: JSON.stringify(updateReimbursement),
-        headers: { "Content-Type": "application/json" },
-      }
-    );
-
-    if(response.status === 200) {
-        alert("Reimbursement status was successfully updated to 'Denied'.");
-        navigateTo("/manager");
+        )
+        if (response.status === 200) {
+            alert("Reimbursement status was successfully updated to 'Approved'.");
+            navigateTo("/manager");
+        }
     }
-  }
+
+    async function denyReimbursement() {
+        const updateReimbursement: Reimbursement = { ...reimbursement };
+        
+        commentInput && (updateReimbursement.comment = commentInput.current.value);
+        updateReimbursement.status = "Denied";
+
+        const response = await fetch("https://ponzi-bank.azurewebsites.net/reimbursements/update",
+        {
+            method: "PUT",
+            body: JSON.stringify(updateReimbursement),
+            headers: { "Content-Type": "application/json" },
+        }
+        );
+
+        if(response.status === 200) {
+            alert("Reimbursement status was successfully updated to 'Denied'.");
+            navigateTo("/manager");
+        }
+    }
     
     function returnToReimbursements() {
         isManager ? navigateTo("/manager") : navigateTo("/non-manager");
@@ -114,10 +138,19 @@ export default function ReimbursementDetails() {
                                 </td>
                             </tr>
                             
-                            {/* <tr>
-                                <td>Receipts: </td>
-                                <td>{reimbursement.receipts}</td>
-                            </tr> */}
+                            {!_.isEmpty(receiptURLs) &&
+                                (
+                                    <tr>
+                                        <td>
+                                            Receipts:
+                                        </td>
+
+                                        <td>
+                                            {receiptURLs[0]}
+                                        </td>
+                                    </tr>
+                                )
+                            }
                             
                             <tr>
                                 <td>

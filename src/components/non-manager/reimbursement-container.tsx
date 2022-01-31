@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Reimbursement from "../../DTOs/reimbursement";
+import { UserState } from "../../sessionStore";
 import ReimbursementForm from "./reimbursement-form";
 import ReimbursementRecordsTable from "./reimbursement-records-table";
 
 export default function NonManagerReimbursementContainer() {
 
+  const user = useSelector((state: UserState) => state);
   const [reimbursementRecords, setReimbursementRecords] = useState<Reimbursement[]>([]);
   const navigateTo = useNavigate();
 
@@ -26,6 +29,7 @@ export default function NonManagerReimbursementContainer() {
 
     return (
       <>
+        <h3 style={{textAlign: "center"}}>Welcome, {user.firstName}!</h3>
         <table>
           <tbody>
             <tr>
